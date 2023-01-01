@@ -1,0 +1,69 @@
+<!-- 原理：加密和解密可以使用位异或来运算，因为A与B异或得到C，C与B异或得到A，因此B成为密钥 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>密码加密</title>
+</head>
+<body>
+	<!-- 此文本域用来进行操作 -->
+	<textarea style="width:300px;height:300px;font-size:20px" id="input_area"></textarea> 
+	<!-- 此文本域用来进行显示历史记录，不可操作  -->
+	<textarea style="width:1000px;height:300px;font-size:20px" id="show_area" disabled="disabled"></textarea>
+	<br>
+	密钥：<input type="text" id="pass_word">
+	<input type="button" value="加密" id="btncode" onclick="set_show_area(),getmessage(),getold()">
+	<input type="button" value="解密" id="btnencode" onclick="set_show_area(),getmessage(),getold()">
+	<input type="button" value="清除历史记录" id="clears" onclick="clear_message()">
+
+
+	<script type="text/javascript">
+		var input_area=document.getElementById("input_area");
+		var show_area=document.getElementById("show_area");
+		input_area.focus();                //让焦点在输入文本框上
+		
+		function getmessage(){
+			var input_area_value=input_area.value;
+			var pass_word_value=document.getElementById("pass_word").value;
+			//上面两步是得到输入文本框和密钥的值
+			msgcoded=codeand(pass_word_value,input_area_value);    //调用解密函数，传递两个值
+			input_area.value=msgcoded;   						   //返回的值重新显示在输入文本域
+		}
+		
+		
+		//加密解密函数
+		function codeand(peky,date){
+			var codestr="";											//已经加密或解密的字符序列
+			for(var i=0;i<date.length;i++){							//for循环对信息串逐个加密
+				var dateCode;                                       //已经加密或解密的字符的unicode编码
+				for(var j=0;j<peky.length;j++){						//密钥串的每个字符与串中当前字符进行位异或
+					var keyCode=peky.charCodeAt(j);					//从密钥串中提取一个字符的unicode编码
+					var dateCode=date.charCodeAt(i)^keyCode;		//异或运算
+				}
+				codestr+=String.fromCharCode(dateCode);
+			}
+			return codestr;											//返回信息串
+		}
+
+		var show_string="历史记录";
+		show_area.value=show_string;
+		function set_show_area(){
+			var input_area_value=input_area.value;
+			var pass_word_value=document.getElementById("pass_word").value;
+			show_string+="\n"+"初始值："+input_area_value+" 密钥："+pass_word_value;
+			show_area.value=show_string;
+		}
+
+		function getold(){
+			var input_area_value=input_area.value;
+			show_string+=" 加密后的值："+input_area_value;
+			show_area.value=show_string;
+		}
+
+		function clear_message(){
+			show_string="历史记录";
+			show_area.value=show_string;
+		}
+	</script>
+</body>
+</html>
