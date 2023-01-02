@@ -2,24 +2,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+	/>
+	<meta name="renderer" content="webkit" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="format-detection" content="email=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
 	<title>密码加密</title>
 </head>
+<style>
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	font-size: 5vw
+}
+#main {
+	display: flex;
+	align-items: center;
+}
+#pass_word {
+	width: 30vw;
+	height: 5vw;
+	font-size: 3vw
+}
+.btncode {
+	width: 10vw;
+	height: 7vw;
+	font-size: 3vw;
+	margin-left: 3vw;
+}
+</style>
 <body>
 	<!-- 此文本域用来进行操作 -->
-	<textarea style="width:300px;height:300px;font-size:20px" id="input_area"></textarea> 
+	<textarea style="width:99vw;height:60vh;font-size:4vw" id="input_area"></textarea> 
 	<!-- 此文本域用来进行显示历史记录，不可操作  -->
-	<textarea style="width:1000px;height:300px;font-size:20px" id="show_area" disabled="disabled"></textarea>
+	<!-- <textarea style="width:1000px;height:300px;font-size:20px" id="show_area" disabled="disabled"></textarea> -->
 	<br>
-	密钥：<input type="text" id="pass_word">
-	<input type="button" value="加密" id="btncode" onclick="set_show_area(),getmessage(),getold()">
-	<input type="button" value="解密" id="btnencode" onclick="set_show_area(),getmessage(),getold()">
-	<input type="button" value="清除历史记录" id="clears" onclick="clear_message()">
+	<div id="main">
+		密钥：<input type="text" id="pass_word">
+		<input type="button" value="加密" class="btncode" onclick="set_show_area(),getmessage(),getold()">
+		<input type="button" value="解密" class="btncode" onclick="set_show_area(),getmessage(),getold()">
+		<!-- <input type="button" value="清除历史记录" id="clears" onclick="clear_message()"> -->
+	</div>
 
 
 	<script type="text/javascript">
 		var input_area=document.getElementById("input_area");
-		var show_area=document.getElementById("show_area");
+		// var show_area=document.getElementById("show_area");
 		input_area.focus();                //让焦点在输入文本框上
 		
 		function getmessage(){
@@ -46,23 +83,23 @@
 		}
 
 		var show_string="历史记录";
-		show_area.value=show_string;
+		// show_area.value=show_string;
 		function set_show_area(){
 			var input_area_value=input_area.value;
 			var pass_word_value=document.getElementById("pass_word").value;
 			show_string+="\n"+"初始值："+input_area_value+" 密钥："+pass_word_value;
-			show_area.value=show_string;
+			// show_area.value=show_string;
 		}
 
 		function getold(){
 			var input_area_value=input_area.value;
 			show_string+=" 加密后的值："+input_area_value;
-			show_area.value=show_string;
+			// show_area.value=show_string;
 		}
 
 		function clear_message(){
 			show_string="历史记录";
-			show_area.value=show_string;
+			// show_area.value=show_string;
 		}
 	</script>
 </body>
